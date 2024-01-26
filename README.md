@@ -7,9 +7,12 @@
     </a>
 </div>
 
-[![Push](https://github.com/php/php-src/actions/workflows/push.yml/badge.svg)](https://github.com/php/php-src/actions/workflows/push.yml)
-[![Build status](https://travis-ci.com/php/php-src.svg?branch=master)](https://travis-ci.com/github/php/php-src)
-[![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/php.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:php)
+<p align="center">
+<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+</p>
 
 # PHP cơ bản
 
@@ -31,6 +34,22 @@ Học về PHP thuần và xây dựng 1 dự án quản lý người dùng bằ
 ## Dự án quản lý người dùng
 
 ### Các chức năng của dự án
+
+- Liệt kê bảng thông tin người dùng
+  - Có chức năng lọc theo status(active tức là tài khoản đã kích hoạt hay chưa) và fullname
+  - Có chức năng phân trang theo lọc ở trên
+- Hiển thị form Thêm, Sửa người dùng
+- Đăng kí người dùng
+  - Lưu thông tin người dùng vào bảng users
+  - Gửi tới email đã đăng kí link để active tài khoản người dùng
+    (Nếu không active thì sẽ ko thể đăng nhập được)
+  - Sau khi người dùng click link active sẽ tự động chuyển về trang đăng nhập
+- Đăng nhập sẽ kiểm tra theo email trong DB có tồn tại không mới cho đăng nhập
+- Chức năng quên mật khẩu cũng sẽ gửi link reset mật khẩu tới mail
+  - Sau khi người dùng click link reset mật khẩu sẽ chuyển sang trang reset password
+  - Sau khi nhập mật khẩu mới hợp lệ thì sẽ tự chuyển về trang đăng nhập
+- Chức năng xóa sẽ xóa thông tin người dùng ở 2 bảng users và login_token
+- Chức năng logout sẽ xóa token ở session và tự động chuyển về trang đăng nhập
 
 ### Thiết kế Database
 
