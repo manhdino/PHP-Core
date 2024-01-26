@@ -7,7 +7,46 @@ $data = [
 
 layout('header', $data);
 
+//Xử lý lọc dữ liệu
 $filter = '';
+if (isGet()) {
+    $body = getBody();
+
+    //Xử lý lọc status
+    if (!empty($body['status'])) {
+        $status = $body['status'];
+
+        if ($status == 2) {
+            $statusSql = 0;
+        } else {
+            $statusSql = $status;
+        }
+
+        if (!empty($filter) && strpos($filter, 'WHERE') >= 0) {
+
+            $operator = 'AND';
+        } else {
+            $operator = 'WHERE';
+        }
+
+        $filter .= "WHERE status=$statusSql";
+    }
+
+    //Xử lý lọc theo từ khoá
+    if (!empty($body['keyword'])) {
+        $keyword = $body['keyword'];
+
+        if (!empty($filter) && strpos($filter, 'WHERE') >= 0) {
+
+            $operator = 'AND';
+        } else {
+            $operator = 'WHERE';
+        }
+
+        $filter .= " $operator fullname LIKE '%$keyword%'";
+    }
+}
+
 $page = 1;
 //1. Xác định được số lượng bản ghi trên 1 trang
 $perPage = _PER_PAGE; //Mỗi trang có 3 bản ghi
