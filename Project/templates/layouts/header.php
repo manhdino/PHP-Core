@@ -25,7 +25,8 @@ if (!defined('_INCODE')) die('Access Deined...');
 
 <body>
     <header>
-        <div class="container">
+
+        <div class="container mt-3">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="<?php echo _WEB_HOST_ROOT . '?module=users'; ?>">User manager</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"

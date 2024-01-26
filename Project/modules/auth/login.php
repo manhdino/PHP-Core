@@ -26,9 +26,6 @@ if (isPost()) {
 
         if (!empty($userQuery)) {
             $passwordHash = $userQuery['password'];
-            echo $passwordHash;
-            echo '<br/>';
-            echo $password;
             $userId = $userQuery['id'];
 
             if (password_verify($password, $passwordHash)) { //Check password hiện tại với password đã được 

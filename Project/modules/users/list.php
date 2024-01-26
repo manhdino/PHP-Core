@@ -21,7 +21,7 @@ $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT 
     <hr />
     <h3><?php echo $data['pageTitle']; ?></h3>
     <p>
-        <a href="?module=users&action=add" class="btn btn-success btn-sm">Thêm người dùng</i>
+        <a href="?module=users&action=add" class="btn btn-success btn-sm my-2">Thêm người dùng</i>
         </a>
     </p>
 
@@ -64,9 +64,9 @@ $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT 
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Điện thoại</th>
-                <th>Trạng thái</th>
-                <th width="5%">Sửa</th>
-                <th width="5%">Xoá</th>
+                <th width="13%">Trạng thái</th>
+                <th width="6%">Sửa</th>
+                <th width="6%">Xoá</th>
             </tr>
         </thead>
         <tbody>

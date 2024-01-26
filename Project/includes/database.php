@@ -62,3 +62,12 @@ function getAll($sql)
 
     return false;
 }
+
+//lấy số dòng câu truy vấn
+function getRows($sql)
+{
+    $statement = query($sql, [], true);
+    if (!empty($statement)) {
+        return $statement->rowCount();
+    }
+}
