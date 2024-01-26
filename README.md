@@ -32,6 +32,7 @@ Học về PHP thuần và xây dựng 1 dự án quản lý người dùng bằ
 - Cookie
 - Session
 - OOP
+- MVC
 
 ## Dự án quản lý người dùng
 
