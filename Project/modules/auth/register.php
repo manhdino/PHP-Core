@@ -74,6 +74,12 @@ if (isPost()) {
     if (empty($errors)) {  //
         //Không có lỗi xảy ra
         $activeToken = sha1(uniqid() . time()); //Tạo Token cho việc đăng nhập
+        echo $body['password'];
+        echo '<br/>';
+        echo password_hash($body['password'], PASSWORD_DEFAULT);
+        if (password_verify($body['password'], password_hash($body['password'], PASSWORD_DEFAULT))) {
+            echo 'OK';
+        }
         $dataInsert = [
             'email' => $body['email'],
             'fullname' => $body['fullname'],
@@ -94,8 +100,9 @@ if (isPost()) {
             $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản: <br/>';
             $content .= $linkActive . '<br/>';
             $content .= 'Trân trọng!';
-
-            echo $content;
+            setFlashData('msg', 'Đăng ký tài khoản thành công');
+            setFlashData('msg_type', 'success');
+            // echo $content;
             //Tiến hành gửi email
             // $sendStatus = sendMail($body['email'], $subject, $content);
             // if ($sendStatus) {
@@ -112,7 +119,6 @@ if (isPost()) {
         //redirect('?module=auth&action=register');
     } else {
         //Có lỗi xảy ra
-        echo 'Có lỗi xảy ra';
         setFlashData('msg', 'Vui lòng kiểm tra dữ liệu nhập vào');
         setFlashData('msg_type', 'danger');
         setFlashData('errors', $errors);
