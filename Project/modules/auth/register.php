@@ -7,7 +7,7 @@ $data = [
 layout('header-login', $data);
 
 
-
+//Xử lý đăng kí
 if (isPost()) {
 
     //Validate form
