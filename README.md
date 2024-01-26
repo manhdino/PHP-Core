@@ -32,26 +32,27 @@ Học về PHP thuần và xây dựng 1 dự án quản lý người dùng bằ
 
 ### Các chức năng của dự án
 
-#### Thiết kế Database
+### Thiết kế Database
 
-- Bảng users:
+#### Bảng users:
 
-  - id int primary key
-  - email varchar(100)
-  - fullname varchar(50)
-  - phone varchar(20)
-  - password varchar(50)
-  - forgotToken varchar(50)
-  - activeToken varchar(50)
-  - status tinyint
-  - createAt datetime
-  - updateAt datetime
+- id int primary key
+- email varchar(100)
+- fullname varchar(50)
+- phone varchar(20)
+- password varchar(255)
+- forgotToken varchar(50)
+- activeToken varchar(50)
+- status tinyint
+- createAt datetime
+- updateAt datetime
 
-- Bảng login_token
-  - id int primary key
-  - userId int foreign key đến users(id)
-  - token varchar(50)
-  - createAt datetime
+#### Bảng login_token
+
+- id int primary key
+- userId int foreign key đến users(id)
+- token varchar(50)
+- createAt datetime
 
 ### Các câu lệnh để clone và chạy dự án:
 
