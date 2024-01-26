@@ -82,36 +82,33 @@ if (isPost()) {
             'activeToken' => $activeToken,
             'createAt' => date('Y-m-d H:i:s')
         ];
-        echo '<pre>';
-        print_r($dataInsert);
-        echo '</pre>';
 
-        // $insertStatus = insert('users', $dataInsert);
-        // if ($insertStatus){
 
-        //     //Tạo link kích hoạt
-        //     $linkActive = _WEB_HOST_ROOT.'?module=auth&action=active&token='.$activeToken;
-        //     //Thiết lập gửi email
-        //     $subject = $body['fullname'].' vui lòng kích hoạt tài khoản';
-        //     $content = 'Chào bạn: '.$body['fullname'].'<br/>';
-        //     $content.='Vui lòng click vào link dưới đây để kích hoạt tài khoản: <br/>';
-        //     $content.=$linkActive.'<br/>';
-        //     $content.='Trân trọng!';
+        $insertStatus = insert('users', $dataInsert);
+        if ($insertStatus) {
+            //Tạo link kích hoạt
+            $linkActive = _WEB_HOST_ROOT . '?module=auth&action=active&token=' . $activeToken;
+            //Thiết lập gửi email
+            $subject = $body['fullname'] . ' vui lòng kích hoạt tài khoản';
+            $content = 'Chào bạn: ' . $body['fullname'] . '<br/>';
+            $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản: <br/>';
+            $content .= $linkActive . '<br/>';
+            $content .= 'Trân trọng!';
 
-        //     //Tiến hành gửi email
-        //     $sendStatus = sendMail($body['email'], $subject, $content);
-        //     if ($sendStatus){
-        //         setFlashData('msg', 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email để kích hoạt tài khoản');
-        //         setFlashData('msg_type', 'success');
-        //     }else{
-        //         setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
-        //         setFlashData('msg_type', 'danger');
-        //     }
-
-        // }else{
-        //     setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
-        //     setFlashData('msg_type', 'danger');
-        // }
+            echo $content;
+            //Tiến hành gửi email
+            // $sendStatus = sendMail($body['email'], $subject, $content);
+            // if ($sendStatus) {
+            //     setFlashData('msg', 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email để kích hoạt tài khoản');
+            //     setFlashData('msg_type', 'success');
+            // } else {
+            //     setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
+            //     setFlashData('msg_type', 'danger');
+            // }
+        } else {
+            setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
+            setFlashData('msg_type', 'danger');
+        }
         //redirect('?module=auth&action=register');
     } else {
         //Có lỗi xảy ra
@@ -120,8 +117,8 @@ if (isPost()) {
         setFlashData('msg_type', 'danger');
         setFlashData('errors', $errors);
         setFlashData('old', $body);
-        // redirect('?module=auth&action=register'); //Load lại trang đăng ký
     }
+    //redirect('?module=auth&action=register'); //Load lại trang đăng ký
 }
 
 $msg = getFlashData('msg');
