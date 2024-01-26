@@ -47,12 +47,49 @@ if (isGet()) {
     }
 }
 
-$page = 1;
+//Xử lý phân trang
+$allUserNum = getRows("SELECT id FROM users $filter");
+
 //1. Xác định được số lượng bản ghi trên 1 trang
 $perPage = _PER_PAGE; //Mỗi trang có 3 bản ghi
+
+//2. Tính số trang
+$maxPage = ceil($allUserNum / $perPage);
+
+
+//3. Xử lý số trang dựa vào phương thức GET
+if (!empty(getBody()['page'])) {
+    $page = getBody()['page'];
+    if ($page < 1 || $page > $maxPage) {
+        $page = 1;
+    }
+} else {
+    $page = 1;
+}
+
+//4. Tính toán offset trong Limit dựa vào biến $page
+/*
+ * $page = 1 => offset = 0 = ($page-1)*$perPage = (1-1)*3 = 0
+ * $page = 2 => offset = 3 = ($page-1)*$perPage = (2-1)*3 = 3
+ * $page = 3 => offset = 6 = ($page-1)*$perPage = (3-1)*3 = 6
+ *
+ * */
 $offset = ($page - 1) * $perPage;
+
 //Truy vấn lấy tất cả bản ghi
 $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT $offset, $perPage");
+
+//Xử lý query string tìm kiếm với phân trang
+//Nghĩa là sau khi filter xong, click trang kế thì vẫn phải giữ nguyên filter
+//Lấy queryString vào thêm vào link mỗi khi nhấn nút chuyển trang là xong
+$queryString = null;
+if (!empty($_SERVER['QUERY_STRING'])) {
+    $queryString = $_SERVER['QUERY_STRING'];
+    $queryString = str_replace('module=users', '', $queryString);
+    $queryString = str_replace('&page=' . $page, '', $queryString);
+    $queryString = trim($queryString, '&');
+    $queryString = '&' . $queryString;
+}
 $msg = getFlashData('msg');
 $msgType = getFlashData('msg_type');
 ?>
@@ -139,8 +176,35 @@ $msgType = getFlashData('msg_type');
     </table>
 
     <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            <?php echo 'Phân trang ở đây' ?>
+        <ul class="pagination mx-auto justify-content-center">
+            <?php
+            if ($page > 1) {
+                $prevPage = $page - 1;
+                echo '<li class="page-item"><a class="page-link" href="' . _WEB_HOST_ROOT . '?module=users' . $queryString . '&page=' . $prevPage . '">Trước</a></li>';
+            }
+            ?>
+
+            <?php
+            $begin = $page - 2;
+            if ($begin < 1) {
+                $begin = 1;
+            }
+            $end = $page + 2;
+            if ($end > $maxPage) {
+                $end = $maxPage;
+            }
+            for ($index = $begin; $index <= $end; $index++) { ?>
+                <li class="page-item <?php echo ($index == $page) ? 'active' : false; ?>"><a class="page-link" href="<?php echo _WEB_HOST_ROOT . '?module=users' . $queryString . '&page=' . $index; ?>"><?php echo $index; ?></a>
+                </li>
+            <?php } ?>
+
+            <?php
+            if ($page < $maxPage) {
+                $nextPage = $page + 1;
+                echo '<li class="page-item"><a class="page-link" href="' . _WEB_HOST_ROOT . '?module=users' . $queryString . '&page=' . $nextPage . '">Sau</a></li>';
+            }
+            ?>
+
         </ul>
     </nav>
 
