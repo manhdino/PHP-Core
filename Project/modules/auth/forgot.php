@@ -7,16 +7,64 @@ $data = [
 
 layout('header-login', $data);
 
-//Xử lý đăng nhập
+//Xử lý quên mật khẩu
 if (isPost()) {
-    redirect('?module=auth&action=reset');
+    $body = getBody();
+    if (!empty($body['email'])) {
+        $email = $body['email'];
+        $queryUser = first("SELECT id FROM users WHERE email='$email'");
+        if (!empty($queryUser)) {
+            $userId = $queryUser['id'];
+
+            //Tạo forgotToken
+            $forgotToken = sha1(uniqid() . time());
+            $dataUpdate = [
+                'forgotToken' => $forgotToken
+            ];
+
+            $updateStatus = update('users', $dataUpdate, "id=$userId");
+            if ($updateStatus) {
+
+                //Tạo link khôi phục
+                $linkReset = _WEB_HOST_ROOT . '?module=auth&action=reset&token=' . $forgotToken;
+
+                //Thiết lập gửi email
+                $subject = 'Yêu cầu khôi phục mật khẩu';
+                $content = 'Chào bạn: ' . $email . '<br/>';
+                $content .= 'Chúng tôi nhận được yêu cầu khôi phục mật khẩu từ bạn. Vui lòng click vào link sau để khôi phục: <br/>';
+                $content .= $linkReset . '<br/>';
+                $content .= 'Trân trọng!';
+
+                //Tiến hành gửi email
+                $sendStatus = sendMail($email, $subject, $content);
+                if ($sendStatus) {
+                    setFlashData('msg', 'Vui lòng kiểm tra email để xem hướng dẫn đặt lại mật khẩu');
+                    setFlashData('msg_type', 'success');
+                } else {
+                    setFlashData('msg', 'Lỗi hệ thống! Bạn không thể sử dụng chức năng này');
+                    setFlashData('msg_type', 'danger');
+                }
+            } else {
+                setFlashData('msg', 'Lỗi hệ thống! Bạn không thể sử dụng chức năng này');
+                setFlashData('msg_type', 'danger');
+            }
+        } else {
+            setFlashData('msg', 'Địa chỉ email không tồn tại trong hệ thống');
+            setFlashData('msg_type', 'danger');
+        }
+    } else {
+    }
+
+    redirect('?module=auth&action=forgot');
 }
 
+$msg = getFlashData('msg');
+$msgType = getFlashData('msg_type');
 ?>
 <div class="row">
     <div class="col-6" style="margin: 20px auto;">
         <h3 class="text-center text-uppercase">Đặt lại mật khẩu</h3>
-        <?php //getMsg($msg, $msgType); 
+        <?php getMsg($msg, $msgType);
         ?>
         <form action="" method="POST">
             <div class="form-group">

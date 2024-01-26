@@ -8,6 +8,11 @@ $data = [
     'pageTitle' => 'Đăng nhập hệ thống'
 ];
 
+//Kiểm tra trạng thái đăng nhập
+if (isLogin()) {
+    redirect('?module=users');
+}
+
 layout('header-login', $data);
 //Xử lý đăng nhập
 if (isPost()) {
