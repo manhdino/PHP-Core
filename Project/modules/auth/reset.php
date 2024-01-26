@@ -70,12 +70,11 @@ if (!empty($token)) {
                 redirect('?module=auth&action=reset&token=' . $token);
             }
         } //End isPost()
-
-        $msg = getFlashData('msg');
-        $msgType = getFlashData('msg_type');
-        $errors = getFlashData('errors');
     }
 }
+$msg = getFlashData('msg');
+$msgType = getFlashData('msg_type');
+$errors = getFlashData('errors');
 ?>
 <div class="row text-left">
     <div class="col-6" style="margin: 20px auto;">

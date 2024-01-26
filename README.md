@@ -7,12 +7,14 @@
     </a>
 </div>
 
-<p align="center">
+<div style="margin-top: 20px;">
+<p align="center" >
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
+</div>
 
 # PHP cơ bản
 
@@ -77,4 +79,19 @@ Học về PHP thuần và xây dựng 1 dự án quản lý người dùng bằ
 
 Clone dự án từ github:
 
-    git clone https://github.com/manhdino/PHP-Core.git
+        git clone https://github.com/manhdino/PHP-Core.git
+
+Thiết kế bảng theo mẫu Database ở trên
+
+Cấu hình lại file config.php theo thư mục trên Xampp:
+
+        define('_WEB_HOST_ROOT', 'http://' . $_SERVER['HTTP_HOST'] . '/PHP-Core/Project');
+        thay 'PHP-Core/Project' theo thư mục htdocs trên Xampp
+
+Cấu hình lại hàm sendMail trong functions.php thay lại mật khẩu ứng dụng SMTP cho phù hợp
+với email
+
+         $mail->Username   = 'emai_cua_ban_@gmail.com';                     //SMTP username
+         $mail->Password   = 'mat_khau_ung_dung';                               //SMTP password
+
+
