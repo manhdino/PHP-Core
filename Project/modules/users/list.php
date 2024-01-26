@@ -14,6 +14,8 @@ $perPage = _PER_PAGE; //Mỗi trang có 3 bản ghi
 $offset = ($page - 1) * $perPage;
 //Truy vấn lấy tất cả bản ghi
 $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT $offset, $perPage");
+$msg = getFlashData('msg');
+$msgType = getFlashData('msg_type');
 ?>
 
 
@@ -55,7 +57,7 @@ $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT 
 
 
     <?php
-    // getMsg($msg, $msgType);
+    getMsg($msg, $msgType);
     ?>
     <table class="table table-bordered">
         <thead>
@@ -84,7 +86,7 @@ $listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT 
                         <td><?php echo $item['status'] == 1 ? '<button type="button" class="btn btn-success btn-sm">Kích hoạt</button>' : '<button type="button" class="btn btn-warning btn-sm">Chưa kích hoạt</button>'; ?>
                         </td>
                         <td><a href="<?php echo _WEB_HOST_ROOT . '?module=users&action=edit&id=' . $item['id']; ?>" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a></td>
-                        <td><a href="<?php echo _WEB_HOST_ROOT . '?module=users&action=delete&id=' . $item['id']; ?>" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a></td>
+                        <td><a href="<?php echo _WEB_HOST_ROOT . '?module=users&action=delete&id=' . $item['id']; ?>" onclick="return confirm('Bạn có chắc muốn xóa người dùng này?')" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                 <?php endforeach;
             else : ?>
