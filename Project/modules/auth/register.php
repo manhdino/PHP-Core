@@ -74,12 +74,6 @@ if (isPost()) {
     if (empty($errors)) {  //
         //Không có lỗi xảy ra
         $activeToken = sha1(uniqid() . time()); //Tạo Token cho việc đăng nhập
-        echo $body['password'];
-        echo '<br/>';
-        echo password_hash($body['password'], PASSWORD_DEFAULT);
-        if (password_verify($body['password'], password_hash($body['password'], PASSWORD_DEFAULT))) {
-            echo 'OK';
-        }
         $dataInsert = [
             'email' => $body['email'],
             'fullname' => $body['fullname'],
@@ -100,18 +94,16 @@ if (isPost()) {
             $content .= 'Vui lòng click vào link dưới đây để kích hoạt tài khoản: <br/>';
             $content .= $linkActive . '<br/>';
             $content .= 'Trân trọng!';
-            setFlashData('msg', 'Đăng ký tài khoản thành công');
-            setFlashData('msg_type', 'success');
-            // echo $content;
+
             //Tiến hành gửi email
-            // $sendStatus = sendMail($body['email'], $subject, $content);
-            // if ($sendStatus) {
-            //     setFlashData('msg', 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email để kích hoạt tài khoản');
-            //     setFlashData('msg_type', 'success');
-            // } else {
-            //     setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
-            //     setFlashData('msg_type', 'danger');
-            // }
+            $sendStatus = sendMail($body['email'], $subject, $content);
+            if ($sendStatus) {
+                setFlashData('msg', 'Đăng ký tài khoản thành công. Vui lòng kiểm tra email để kích hoạt tài khoản');
+                setFlashData('msg_type', 'success');
+            } else {
+                setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
+                setFlashData('msg_type', 'danger');
+            }
         } else {
             setFlashData('msg', 'Hệ thống đang gặp sự cố! Vui lòng thử lại sau.');
             setFlashData('msg_type', 'danger');
