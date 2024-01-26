@@ -20,7 +20,7 @@ if (isPost()) {
         $password = $body['password'];
 
         //Truy vấn lấy thông tin user theo email
-        $userQuery = firstRaw("SELECT id, password FROM users WHERE email='$email' AND status=1");
+        $userQuery = first("SELECT id, password FROM users WHERE email='$email' AND status=1");
 
 
 

@@ -40,11 +40,23 @@ function insert($table, $dataInsert)
 
 
 //Lấy dữ liệu từ câu lệnh SQL - Lấy 1 bản ghi dùng để check login xem người dùng có tồn tại hay không
-function firstRaw($sql)
+function first($sql)
 {
     $statement = query($sql, [], true);
     if (is_object($statement)) {
         $dataFetch = $statement->fetch(PDO::FETCH_ASSOC);
+        return $dataFetch;
+    }
+
+    return false;
+}
+
+//Lấy dữ liệu từ câu lệnh SQL - Lấy tất cả
+function getAll($sql)
+{
+    $statement = query($sql, [], true);
+    if (is_object($statement)) {
+        $dataFetch = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $dataFetch;
     }
 

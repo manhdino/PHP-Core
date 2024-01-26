@@ -6,6 +6,14 @@ $data = [
 ];
 
 layout('header', $data);
+
+$filter = '';
+$page = 1;
+//1. Xác định được số lượng bản ghi trên 1 trang
+$perPage = _PER_PAGE; //Mỗi trang có 3 bản ghi
+$offset = ($page - 1) * $perPage;
+//Truy vấn lấy tất cả bản ghi
+$listAllUser = getAll("SELECT * FROM users $filter ORDER BY createAt DESC LIMIT $offset, $perPage");
 ?>
 
 
